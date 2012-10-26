@@ -1,25 +1,19 @@
 \name{valid}
 \alias{valid}
-
-\title{
-    Ensure probabilities are valid
-}
-\description{
-  Truncate calculated probabilities into the range [0,1]
-}
+\title{#' Ensure probabilities are valid}
 \usage{
-valid(x)
+  valid(x)
 }
-
 \arguments{
   \item{x}{probability}
 }
+\description{
+  Force calculated probabilities into the range [0,1].
+}
 \details{
-  Due to floating-point arithmetic, a number that should represent a
-    probability can be calculated as being less than zero or greater
-    than one.  This function returns a value that is a valid probability.
+  Due to floating-point arithmetic, a number that should
+  represent a probability can be calculated as being less
+  than zero or greater than one. This function returns a
+  value that is a valid probability.
 }
-\author{
-  Kevin Wright
-}
-\keyword{ models }
+
