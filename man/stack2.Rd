@@ -6,18 +6,18 @@
 \alias{stack3Excel}
 \title{Multinomial group testing estimation of stacked genes}
 \usage{
-  stack3(n, m, nA, nB, nC, nAB, nAC, nBC, nABC,
-    existAB = "Yes", existAC = "Yes", existBC = "Yes",
-    existABC = "Yes", fpr = 0, fnr = 0, check = TRUE)
+stack3(n, m, nA, nB, nC, nAB, nAC, nBC, nABC, existAB = "Yes",
+  existAC = "Yes", existBC = "Yes", existABC = "Yes", fpr = 0,
+  fnr = 0, check = TRUE)
 
-  stack2Excel(...)
+stack2Excel(...)
 
-  stack3Excel(...)
+stack3Excel(...)
 
-  stack2(n, m, nA, nB, nAB, existAB = "Yes", fpr = 0,
-    fnr = 0, check = TRUE)
+stack2(n, m, nA, nB, nAB, existAB = "Yes", fpr = 0, fnr = 0,
+  check = TRUE)
 
-  \method{print}{seedstack} (x, ...)
+\method{print}{seedstack}(x, ...)
 }
 \arguments{
   \item{n}{the number of pools}
@@ -62,28 +62,28 @@
   \item{x}{A data frame to print pretty.}
 }
 \value{
-  A data frame with the estimated proportion of seeds for
-  each event, the observed and expected number of positive
-  pools, and whether or not each event can exist.
+A data frame with the estimated proportion of seeds for
+each event, the observed and expected number of positive
+pools, and whether or not each event can exist.
 }
 \description{
-  Assuming qualitative tests are performed on n pools of m
-  seeds, use multinomial group testing to estimate the
-  percent of seeds with single genetic traits and the
-  percentage of seeds with stacked genetic traits.
+Assuming qualitative tests are performed on n pools of m
+seeds, use multinomial group testing to estimate the
+percent of seeds with single genetic traits and the
+percentage of seeds with stacked genetic traits.
 
-  Print method for seedstack object.
+Print method for seedstack object.
 }
 \details{
-  The 'stack2Excel' and 'stack3Excel' functions are simple
-  wrappers that are intended to be called from Excel and
-  should not issue any warnings.
+The 'stack2Excel' and 'stack3Excel' functions are simple
+wrappers that are intended to be called from Excel and
+should not issue any warnings.
 }
 \examples{
 stack2(10, 300, 0, 1, 2)
 stack3(20,150, 2,2,2,2,2,2,3, existAB="no", fnr=.02, fpr=.02)
 }
 \author{
-  Kevin Wright, Jean-Louis Laffont
+Kevin Wright, Jean-Louis Laffont
 }
 

@@ -63,8 +63,9 @@ stack3 <- function(n, m, nA, nB, nC, nAB, nAC, nBC, nABC,
   upper <- rep(1, length(init))
   lower <- rep(1e-7, length(init))  # needs to be larger than ndeps
 
-  cpr = 1-fpr # correct positive rate
-  cnr = 1-fnr
+  cpr = 1-fpr # Correct Positive Rate
+  cnr = 1-fnr # Correct Negative Rate
+  
   K <- matrix(c(cpr^3,     fnr*cpr^2,   fnr*cpr^2,   fnr*cpr^2,   fnr^2*cpr,   fnr^2*cpr,   fnr^2*cpr,   fnr^3,
                 fpr*cpr^2, cnr*cpr^2,   fnr*fpr*cpr, fnr*fpr*cpr, fnr*cnr*cpr, fnr*cnr*cpr, fpr*fnr^2,   cnr*fnr^2,
                 fpr*cpr^2, fnr*fpr*cpr, cnr*cpr^2,   fnr*fpr*cpr, fnr*cnr*cpr, fpr*fnr^2,   fnr*cnr*cpr, cnr*fnr^2,

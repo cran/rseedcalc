@@ -1,7 +1,8 @@
-2c6dfbcc1e334b383394c21878dc3321 *DESCRIPTION
-eb58107b31f5f32387a56c47ec992f71 *NAMESPACE
+843d58191c224418b645d664f1c09ebc *DESCRIPTION
+5f6a40dc4ecb64f2d8f461a5c713bfdb *NAMESPACE
+be5e033f04183019a39e09b346382fb8 *NEWS
 44ebcce54ad9d21e7d73756236b2a76e *R/rseedcalc-package.R
-d52a4c66e8d56e78b4ecc79bfcc3ebd7 *R/stacks.r
-a25cb7a305c48fb49d37c502106fe2d9 *man/rseedcalc-package.Rd
-da87184ea49e93b3927aa5ddccb2654f *man/stack2.Rd
-973b9bc5748a60f280d1cefe8ac9d516 *man/valid.Rd
+0f29576df01f7c580bc3d7b83f94cf54 *R/stacks.r
+5b0a4337f9a9af4b135524f0c51beb8b *man/rseedcalc-package.Rd
+4a3bc9592e9b61d8dd9d758d9f2c2bf2 *man/stack2.Rd
+f8d2b467a4c007c03f33292937dfec53 *man/valid.Rd

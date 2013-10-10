@@ -1,5 +1,7 @@
+import(stats)
+
+S3method(print,seedstack)
 export(stack2)
 export(stack2Excel)
 export(stack3)
 export(stack3Excel)
-S3method(print,seedstack)
