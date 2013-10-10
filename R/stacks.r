@@ -1,11 +1,11 @@
 # stacks.r
 
 #' Multinomial group testing estimation of stacked genes
-#' 
+#'
 #' Assuming qualitative tests are performed on n pools of m seeds, use
 #' multinomial group testing to estimate the percent of seeds with single
 #' genetic traits and the percentage of seeds with stacked genetic traits.
-#' 
+#'
 #' The 'stack2Excel' and 'stack3Excel' functions are simple wrappers that are
 #' intended to be called from Excel and should not issue any warnings.
 #'
@@ -47,7 +47,7 @@ stack3 <- function(n, m, nA, nB, nC, nAB, nAC, nBC, nABC,
   # fnr:   false negative rate (%)
   # fpr:   false positive rate (%)
 
-  if (check && sum(c(nA, nB, nC, nAB, nAC, nBC, nABC)) > n) 
+  if (check && sum(c(nA, nB, nC, nAB, nAC, nBC, nABC)) > n)
     stop("The total number of positive pools must be <=", n)
 
   # Define indicator vector for which 'theta' to optimize
@@ -89,7 +89,7 @@ stack3 <- function(n, m, nA, nB, nC, nAB, nAC, nBC, nABC,
   if(ok){
     dat$prop <- rep(0, nrow(dat))
     dat$prop[match(names(oo$par),dat$event)] <- oo$par
-    
+
     # Expected number of pools
     tA <- dat$prop[1] ; tB <- dat$prop[2] ; tC <- dat$prop[3]
     tAB <- dat$prop[4] ; tAC <- dat$prop[5] ;   tBC <- dat$prop[6]
@@ -104,20 +104,20 @@ stack3 <- function(n, m, nA, nB, nC, nAB, nAC, nBC, nABC,
     pABC <- valid(1 - p0 - pA - pB - pC - pAB - pAC - pBC)
     dat$expect <- n * c(pA, pB, pC, pAB, pAC, pBC, pABC)
   }
-  class(dat) <- c("seedstack", class(dat))  
+  class(dat) <- c("seedstack", class(dat))
   return(dat)
 }
 
 # ----------------------------------------------------------------------------
 
 #' #' Ensure probabilities are valid
-#' 
+#'
 #' Force calculated probabilities into the range [0,1].
-#' 
+#'
 #' Due to floating-point arithmetic, a number that should represent a
 #' probability can be calculated as being less than zero or greater than one.
 #' This function returns a value that is a valid probability.
-#' 
+#'
 #' @param x probability
 valid <- function(x){
   # Restrict to 0,1.  Note: pmin/pmax was slow, so was ifelse.
@@ -157,7 +157,7 @@ stack2 <- function(n, m, nA, nB, nAB, existAB="Yes", fpr=0, fnr=0,
 
   if(check && sum(nA, nB, nAB) > n)
     stop("The total number of positive pools must be <=",n)
-  
+
   # Indicator vector for which values of theta to optimize
   ind <- c(FALSE, TRUE, TRUE, # 0, A, B
            existAB=="Yes")
@@ -170,7 +170,7 @@ stack2 <- function(n, m, nA, nB, nAB, existAB="Yes", fpr=0, fnr=0,
   names(init) <- c('0', 'A', 'B', 'AB')[ind]
   upper <- rep(1, length(init))
   lower <- rep(1e-7, length(init))  # needs to be larger than ndeps
-  
+
   cpr = 1-fpr # correct positive rate
   cnr = 1-fnr
   K <- matrix(c(cpr^2,   fnr*cpr, fnr*cpr, fnr^2,
@@ -192,9 +192,9 @@ stack2 <- function(n, m, nA, nB, nAB, existAB="Yes", fpr=0, fnr=0,
   if(ok){
     dat$prop <- rep(0, nrow(dat))
     dat$prop[match(names(oo$par),dat$event)] <- oo$par
-    
+
     # Expected number of pools
-    tA <- dat$prop[1] ; tB <- dat$prop[2] ; tAB <- dat$prop[3] 
+    tA <- dat$prop[1] ; tB <- dat$prop[2] ; tAB <- dat$prop[3]
     p0 <- (1 - (tA + tB + tAB))^m
     pA <- (1 - (tB + tAB))^m - p0
     pB <- (1 - (tA + tAB))^m - p0
@@ -207,7 +207,7 @@ stack2 <- function(n, m, nA, nB, nAB, existAB="Yes", fpr=0, fnr=0,
 
 nll2 <- function(theta, nPos, m, K){
   # Negative loglikelihood
-  # theta   = [thetaA, thetaB, thetaAB] (or some subset) 
+  # theta   = [thetaA, thetaB, thetaAB] (or some subset)
   # nPos    = [n0, nA, nB, nAB]
   # m       = seeds per pool
   # K       = coefficients to fnr/fpr adjustment
@@ -217,19 +217,19 @@ nll2 <- function(theta, nPos, m, K){
   tA <- theta["A"]
   tB <- theta["B"]
   tAB <- theta["AB"]   ; tAB <- ifelse(is.na(tAB), 0, tAB)
-  
+
   # Switch from theta to p
   p0 <- valid((1 - (tA + tB + tAB))^m)
   pA <- valid((1 - (tB + tAB))^m - p0)
   pB <- valid((1 - (tA + tAB))^m - p0)
   pAB <- valid(1 - p0 - pA - pB)
-  
+
   # Adjust for fpr/fnr.
   probs <- K %*% c(p0, pA, pB, pAB)
   probs <- pmax(0, probs)
   probs <- pmin(1, probs)
 
-  # ll: n0*log(p0) + nA*log(pA) + nB*log(pB) + nAB*log(pAB) 
+  # ll: n0*log(p0) + nA*log(pA) + nB*log(pB) + nAB*log(pAB)
   if(any(is.nan(probs))) {
     ll <- NA
   } else if (all(probs > 0)) {
@@ -254,7 +254,7 @@ nll3 <- function(theta, nPos, m, K){
   tAC <- theta["AC"]   ; tAC <- ifelse(is.na(tAC), 0, tAC)
   tBC <- theta["BC"]   ; tBC <- ifelse(is.na(tBC), 0, tBC)
   tABC <- theta["ABC"] ; tABC <- ifelse(is.na(tABC), 0, tABC)
-  
+
   # Switch from theta to p
   p0 <- valid((1 - (tA + tB + tC + tAB + tAC + tBC + tABC))^m)
   pA <- valid((1 - (tB + tC + tAB + tAC + tBC + tABC))^m - p0)
@@ -285,9 +285,9 @@ nll3 <- function(theta, nPos, m, K){
 
 
 #' Print stack object.
-#' 
+#'
 #' Print method for seedstack object.
-#' 
+#'
 #' @param x A data frame to print pretty.
 #' @rdname stack2
 #' @method print seedstack
@@ -309,17 +309,17 @@ print.seedstack <- function(x, ...) {
 
 if(FALSE){
 
-  so <- stack3(20,150, 2,2,2,2,2,2,3, existAB="no", fnr=.02, fpr=.02) # paper
+stack3(20,150, 2,2,2,2,2,2,3, existAB="no", fnr=.02, fpr=.02) # paper
 
 stack2(20, 150, 8, 5, 1)
 
 stack2(20, 150, 8, 5, 8) # fails in R
-stack2(20, 150, 8, 5, 7, check=FALSE) # catch error
-stack2Excel(20, 150, 8, 5, 7) # catch error
+stack2(20, 150, 8, 5, 7, check=FALSE) # fails
+stack2Excel(20, 150, 8, 5, 7) # fails
 
 stack2(20, m=150, 3, 0, 0) # estimates are all NA
 stack2(20, m=150, 10, 0, 0, existAB='no') # two digits in 'observed' column
-  
+
 stack3(20, 150, 1,2,3,1,2,1,1)
 stack2(20, 100, 3, 3, 3, existAB='no')
 stack2(20, 150, 3, 3, 3, existAB='Yes')
@@ -333,12 +333,8 @@ stack3(20,150, 2,2,2,2,2,2,3, existBC='no')
 stack3(20,150, 2,2,2,2,2,2,3, existABC='no')
 
 stack3(20,150, 2,2,2,2,2,2,9, existABC='no') # should fail in R
-stack3(20,150, 2,2,2,2,2,2,9, existABC='no', check=FALSE) # should catch error
-stack3Excel(20,150, 2,2,2,2,2,2,9, existABC='no') # should catch error
-
-system.time(stack3(20,150, 2,2,2,2,2,2,3, existBC='no'))
-
-summaryRprof()
+stack3(20,150, 2,2,2,2,2,2,9, existABC='no', check=FALSE)
+stack3Excel(20,150, 2,2,2,2,2,2,9, existABC='no') #
 
 #Note: To create an array, highlight the cells, then edit the formula, then type CTRL-SHIFT-ENTER.
 #RApply("stack2",D6,D4, d9,d10,d11, f11, h6,h4)

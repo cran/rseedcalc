@@ -1,7 +1,7 @@
-3ed4d9cb8c76ac5073e27d357cc50c3b *DESCRIPTION
+2c6dfbcc1e334b383394c21878dc3321 *DESCRIPTION
 eb58107b31f5f32387a56c47ec992f71 *NAMESPACE
 44ebcce54ad9d21e7d73756236b2a76e *R/rseedcalc-package.R
-18831e0e9cced4ca8ced749960af3084 *R/stacks.r
+d52a4c66e8d56e78b4ecc79bfcc3ebd7 *R/stacks.r
 a25cb7a305c48fb49d37c502106fe2d9 *man/rseedcalc-package.Rd
 da87184ea49e93b3927aa5ddccb2654f *man/stack2.Rd
 973b9bc5748a60f280d1cefe8ac9d516 *man/valid.Rd
